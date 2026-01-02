@@ -7,6 +7,6 @@ class Users_model extends CI_Model {
 
 	public function get_by_username($username)
 	{
-		return $this->db->get_where($this->table,['username'=> $username])->rows();
+		return $this->db->get_where($this->table,['username'=> $username])->row();
 	}
 }

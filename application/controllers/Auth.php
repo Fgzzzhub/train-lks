@@ -16,14 +16,14 @@ class Auth extends MY_Controller {
             redirect('admin/dashboard');
         }
 
-        if($this->input->method() === 'POST')
+        if($this->input->post('username'))
         {
             $this->__set_rules();
             if($this->form_validation->run() == TRUE)
             {
                 $username = $this->input->post('username',TRUE);
                 $password = $this->input->post('password',TRUE);
-                $user = $this->User_model->get_by_username($username);
+                $user = $this->Users_model->get_by_username($username);
                 if($user && (!isset($user->is_active) || (int)$user->is_active === 1))
                 {
                     $ok = (md5($password) === $user->password);
@@ -43,7 +43,7 @@ class Auth extends MY_Controller {
             }
             $this->session->set_flashdata('error','Username/Password salah');
         }
-
+        // $this->session->set_flashdata('error','cihuyy');
         $this->load->view('auth/login');
 	}
 
