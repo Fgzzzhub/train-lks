@@ -2,24 +2,66 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
      <!-- Sidebar -->
      <div class="sidebar">
-         <!-- Sidebar user panel (optional) -->
-         <div class="user-panel pb-3 mb-3 d-flex">
-             <div class="image">
-                 <img src="<?php echo site_url('/assets/adminlte/'); ?>dist/img/user2-160x160.jpg"
-                     class="img-circle elevation-2" alt="User Image">
-             </div>
+        <?php
+            $segment1        = $this->uri->segment(1);
+            $segment2        = $this->uri->segment(2);
+            $isDashboard     = $segment1 === 'admin' && (empty($segment2) || $segment2 === 'dashboard');
+            $isBerita        = $segment1 === 'berita';
+            $isUsers         = $segment1 === 'users';
+            $isPendaftar     = $segment1 === 'pendaftar';
+            $isBackupDb      = $segment1 === 'backupdb';
+        ?>
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="<?php echo site_url('/assets/adminlte/'); ?>dist/img/user2-160x160.jpg"
+                    class="img-circle elevation-2" alt="User Image">
+            </div>
              <div class="info">
-                 <a href="#" class="d-block"><?php echo($user['role']); ?></a>
+                 <a href="#" class="d-block"><?php echo role_label($this->session->userdata('role_id')); ?>
+                 </a>
              </div>
          </div>
-         <!-- Sidebar Menu -->
-         <nav class="mt-2">
-             <ul class="nav nav-pills nav-sidebar flex-column">
-                 <li class="nav-item">
-                     <a href="<?php echo site_url('admin'); ?>" class="nav-link active">
-                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                         <p>
-                             Dashboard
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column">
+                <li class="nav-item">
+                    <a href="<?php echo site_url('admin'); ?>" class="nav-link <?php echo $isDashboard ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo site_url('berita'); ?>" class="nav-link <?php echo $isBerita ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            Berita
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo site_url('users'); ?>" class="nav-link <?php echo $isUsers ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo site_url('pendaftar'); ?>" class="nav-link <?php echo $isPendaftar ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Pendaftar
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo site_url('backupdb'); ?>" class="nav-link <?php echo $isBackupDb ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-database"></i>
+                        <p>
+                            Backup DB
                          </p>
                      </a>
                  </li>

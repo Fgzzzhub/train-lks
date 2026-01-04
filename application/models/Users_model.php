@@ -9,4 +9,9 @@ class Users_model extends CI_Model {
 	{
 		return $this->db->get_where($this->table,['username'=> $username])->row();
 	}
+
+    public function create(array $data)
+    {
+        return $this->db->insert($this->table, $data);
+    }
 }

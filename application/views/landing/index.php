@@ -48,45 +48,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="index3.html" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo site_url('login'); ?>" class="nav-link">Login</a>
+                            <a href="<?php echo site_url('login'); ?>" class="nav-link">Something</a>
                         </li>
+                        <?php $logged_in = $this->session->userdata('logged_in');
+                        $role_id                                 = (int) $this->session->userdata('role_id'); ?>
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" class="nav-link dropdown-toggle">Dropdown</a>
+                                aria-expanded="false" class="nav-link dropdown-toggle">
+                                <?php echo 'Auth'; ?>
+                            </a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item">Some action </a></li>
-                                <li><a href="#" class="dropdown-item">Some other action</a></li>
-
-                                <li class="dropdown-divider"></li>
-
-                                <!-- Level two dropdown-->
-                                <li class="dropdown-submenu dropdown-hover">
-                                    <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false"
-                                        class="dropdown-item dropdown-toggle">Hover for action</a>
-                                    <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                                        <li>
-                                            <a tabindex="-1" href="#" class="dropdown-item">level 2</a>
-                                        </li>
-
-                                        <!-- Level three dropdown-->
-                                        <li class="dropdown-submenu">
-                                            <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false"
-                                                class="dropdown-item dropdown-toggle">level 2</a>
-                                            <ul aria-labelledby="dropdownSubMenu3"
-                                                class="dropdown-menu border-0 shadow">
-                                                <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                                <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                            </ul>
-                                        </li>
-                                        <!-- End Level three -->
-
-                                        <li><a href="#" class="dropdown-item">level 2</a></li>
-                                        <li><a href="#" class="dropdown-item">level 2</a></li>
-                                    </ul>
+                                <?php if (! $logged_in): ?>
+                                <li><a href="<?php echo site_url('login'); ?>" class="dropdown-item">Login</a></li>
+                                <li><a href="<?php echo site_url('register'); ?>" class="dropdown-item">Register</a>
                                 </li>
-                                <!-- End Level two -->
+                                <?php else: ?>
+                                <?php if (in_array($role_id, [1, 2, 3], true)): ?>
+                                <li><a href="<?php echo site_url('admin'); ?>" class="dropdown-item">Dashboard</a></li>
+                                <?php endif; ?>
+                                <li><a href="<?php echo site_url('logout'); ?>"
+                                        class="dropdown-item text-danger">Logout</a></li>
+                                <?php endif; ?>
                             </ul>
                         </li>
                     </ul>

@@ -29,6 +29,9 @@
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="<?php echo site_url('auth/login'); ?>" method="post">
+                    <?php if ($this->session->flashdata('error')): ?>
+                    <p class="text-sm text-danger my-0"><?php echo $this->session->flashdata('error') ?></p>
+                    <?php endif; ?>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Username" name="username">
                         <div class="input-group-append">
@@ -36,10 +39,10 @@
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                        <?php if ($this->session->flashdata('error')): ?>
-                        <div class="alert alert-danger mt-2"><?php echo $this->session->flashdata('error') ?></div>
-                        <?php endif; ?>
                     </div>
+                    <?php if ($this->session->flashdata('error')): ?>
+                    <p class="text-sm text-danger my-0"><?php echo $this->session->flashdata('error') ?></p>
+                    <?php endif; ?>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" placeholder="Password" name="password">
                         <div class="input-group-append">
@@ -47,9 +50,6 @@
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <?php if ($this->session->flashdata('error')): ?>
-                        <div class="alert alert-danger mt-2"><?php echo $this->session->flashdata('error') ?></div>
-                        <?php endif; ?>
                     </div>
                     <div class="row">
                         <!-- /.col -->

@@ -27,12 +27,12 @@ class MY_Controller extends CI_Controller
 
     protected function render($view, $data = [])
     {
-        // gabungkan data global + data lokal
         $data = array_merge($this->data, $data);
 
-        // layout utama
         $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/navbar', $data);
         $this->load->view('layouts/sidebar', $data);
+        $this->load->view('layouts/wrapper', $data);
         $this->load->view($view, $data);
         $this->load->view('layouts/footer', $data);
     }
