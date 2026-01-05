@@ -6,10 +6,12 @@
             $segment1        = $this->uri->segment(1);
             $segment2        = $this->uri->segment(2);
             $isDashboard     = $segment1 === 'admin' && (empty($segment2) || $segment2 === 'dashboard');
+            $isNotifikasi    = $segment1 === 'notifikasi';
             $isBerita        = $segment1 === 'berita';
             $isUsers         = $segment1 === 'users';
             $isPendaftar     = $segment1 === 'pendaftar';
             $isBackupDb      = $segment1 === 'backupdb';
+            $notif_unread    = isset($notif_unread) ? (int) $notif_unread : 0;
         ?>
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel pb-3 mb-3 d-flex">
@@ -30,6 +32,17 @@
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo site_url('notifikasi'); ?>" class="nav-link <?php echo $isNotifikasi ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-bell"></i>
+                        <p>
+                            Notifikasi
+                            <?php if ($notif_unread > 0): ?>
+                            <span class="badge badge-warning right"><?php echo $notif_unread; ?></span>
+                            <?php endif; ?>
                         </p>
                     </a>
                 </li>

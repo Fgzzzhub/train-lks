@@ -2,7 +2,7 @@
     <div class="col-12 col-xl-11 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Responsive Hover Table</h3>
+                <h3 class="card-title"><?php echo $title; ?></h3>
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">

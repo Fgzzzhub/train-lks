@@ -55,8 +55,9 @@ $route['translate_uri_dashes'] = false;
 
 $route['landing'] = 'landing/index';
 
-$route['admin'] = 'admin/dashboard';
-$route['users'] = 'admin/dashboard/users';
+$route['admin']     = 'admin/dashboard';
+$route['users']     = 'admin/dashboard/users';
+$route['pendaftar'] = 'admin/pendaftaran';
 // $route['admin/dashboard'] = 'admin/dashboard';
 
 $route['register'] = 'auth/register';
