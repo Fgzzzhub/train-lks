@@ -6,6 +6,7 @@ class Landing extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Lomba_model');
     }
 
     public function index()
@@ -16,6 +17,7 @@ class Landing extends MY_Controller
         $data = array_merge($this->data, [
             'title'        => 'Web LKS',
             'notif_latest' => [],
+            'matalomba'    => $this->Lomba_model->get_all(),
         ]);
 
         // Hanya tampilkan notifikasi untuk panitia/user

@@ -138,4 +138,19 @@ class Pendaftaran_model extends CI_Model
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
+
+    public function exists_by_user_lomba($user_id, $lomba_id)
+    {
+        $count = $this->db->from($this->table)
+            ->where('user_id', (int) $user_id)
+            ->where('lomba_id', (int) $lomba_id)
+            ->count_all_results();
+
+        return $count > 0;
+    }
+
+    public function create(array $data)
+    {
+        return $this->db->insert('pendaftar', $data);
+    }
 }
