@@ -59,8 +59,24 @@ $route['admin']              = 'admin/dashboard';
 $route['users']              = 'admin/dashboard/users';
 $route['pendaftar']          = 'admin/pendaftaran';
 $route['pendaftaran/daftar'] = 'admin/pendaftaran/daftar';
+$route['admin/pendaftaran/export']   = 'admin/pendaftaran/export';
+$route['admin/pendaftaran/import']   = 'admin/pendaftaran/import';
+$route['admin/pendaftaran/template'] = 'admin/pendaftaran/template';
 // $route['admin/dashboard'] = 'admin/dashboard';
 
 $route['register'] = 'auth/register';
 $route['login']    = 'auth/login';
 $route['logout']   = 'auth/logout';
+
+$route['backupdb'] = 'backup/backup_db';
+
+$route['berita']              = 'berita/index';
+$route['berita/create']       = 'berita/create';
+$route['berita/umum']         = 'berita/public_index';
+$route['berita/detail/(:num)'] = 'berita/detail/$1';
+$route['berita/edit/(:num)']  = 'berita/edit/$1';
+$route['berita/delete/(:num)'] = 'berita/delete/$1';
+
+$route['laporan']             = 'laporan/index';
+$route['laporan/create']      = 'laporan/create';
+$route['laporan/delete/(:num)'] = 'laporan/delete/$1';

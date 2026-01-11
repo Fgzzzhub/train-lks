@@ -12,6 +12,19 @@ class Lomba_model extends CI_Model
             ->result();
     }
 
+    public function count_all()
+    {
+        return (int) $this->db->count_all($this->table);
+    }
+
+    public function get_paginated($limit, $offset)
+    {
+        return $this->db
+            ->limit((int) $limit, (int) $offset)
+            ->get($this->table)
+            ->result();
+    }
+
     public function get_by_id($id)
     {
         return $this->db

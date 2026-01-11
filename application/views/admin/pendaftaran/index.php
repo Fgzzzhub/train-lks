@@ -5,7 +5,28 @@
         <h5 class="mb-1">Daftar Pendaftar</h5>
         <small class="text-muted">Total:                                         <?php echo (int) $total; ?></small>
     </div>
+    <div class="col-md-5 text-md-right">
+        <?php $export_query = http_build_query(['status' => $status, 'q' => $q, 'lomba_id' => $lomba_id]); ?>
+        <a href="<?php echo site_url('admin/pendaftaran/export?' . $export_query); ?>"
+            class="btn btn-outline-success btn-sm mt-2 mt-md-0">
+            <i class="fas fa-file-excel"></i> Export
+        </a>
+        <a href="<?php echo site_url('admin/pendaftaran/template'); ?>"
+            class="btn btn-outline-secondary btn-sm mt-2 mt-md-0">
+            <i class="fas fa-download"></i> Template
+        </a>
+        <a href="<?php echo site_url('admin/pendaftaran/import'); ?>" class="btn btn-primary btn-sm mt-2 mt-md-0">
+            <i class="fas fa-upload"></i> Import
+        </a>
+    </div>
 </div>
+
+<?php if ($this->session->flashdata('error')): ?>
+<div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
+<?php endif; ?>
+<?php if ($this->session->flashdata('success')): ?>
+<div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+<?php endif; ?>
 
 <!-- Filter & Search -->
 <div class="row">
@@ -30,13 +51,26 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
+                            <label>Mata Lomba</label>
+                            <select name="lomba_id" class="form-control">
+                                <option value=""                                                 <?php echo($lomba_id === 0 ? 'selected' : ''); ?>>Semua Lomba</option>
+                                <?php foreach ($lomba_list as $lomba): ?>
+                                <option value="<?php echo (int) $lomba->id; ?>"
+                                    <?php echo($lomba_id === (int) $lomba->id ? 'selected' : ''); ?>>
+                                    <?php echo html_escape($lomba->nama_lomba); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 mb-2">
                             <label>Cari (Nama/Email)</label>
                             <input type="text" name="q" value="<?php echo html_escape($q); ?>" class="form-control"
                                 placeholder="Ketik nama atau email...">
                         </div>
 
-                        <div class="col-md-3 mb-2 d-flex align-items-end">
+                        <div class="col-md-2 mb-2 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary mr-2">
                                 <i class="fas fa-search"></i> Terapkan
                             </button>
@@ -57,6 +91,8 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title mb-0">List Pendaftar</h3>
+                <a href="<?php echo site_url('pendaftaran/daftar'); ?>" class="btn btn-primary btn-sm float-right"><i
+                        class="fas fa-plus"></i></a>
             </div>
 
             <div class="card-body table-responsive p-0">
@@ -88,7 +124,7 @@
                         <?php foreach ($rows as $r): ?>
                         <tr>
                             <td><?php echo $no++; ?></td>
-                            <td><?php echo html_escape($r['username']); ?></td>
+                            <td><?php echo html_escape($r['nama']); ?></td>
                             <td>
                                 <span class="badge badge-info"><?php echo html_escape($r['role']); ?></span>
                             </td>
@@ -125,20 +161,20 @@
                                 <small><?php echo html_escape($r['created_at']); ?></small>
                             </td>
                             <td>
-                                <a href="<?php echo site_url('admin/pendaftaran/detail/' . $r['pendaftaran_id']); ?>"
+                                <a href="<?php echo site_url('admin/pendaftaran/detail/' . $r['pendaftar_id']); ?>"
                                     class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i> Detail
                                 </a>
 
                                 <?php if ($r['status'] === 'pending'): ?>
-                                <a href="<?php echo site_url('admin/pendaftaran/approve/' . $r['pendaftaran_id']); ?>"
+                                <a href="<?php echo site_url('admin/pendaftaran/approve/' . $r['pendaftar_id']); ?>"
                                     class="btn btn-sm btn-success"
                                     onclick="return confirm('Approve pendaftaran ini?');">
                                     <i class="fas fa-check"></i> Approve
                                 </a>
 
                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                    data-target="#modalReject" data-id="<?php echo (int) $r['pendaftaran_id']; ?>"
+                                    data-target="#modalReject" data-id="<?php echo (int) $r['pendaftar_id']; ?>"
                                     data-nama="<?php echo html_escape($r['username']); ?>"
                                     data-lomba="<?php echo html_escape($r['nama_lomba']); ?>">
                                     <i class="fas fa-times"></i> Reject

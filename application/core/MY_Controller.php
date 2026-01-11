@@ -32,6 +32,19 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    protected function require_admin(array $roles = [1, 2, 3]): bool
+    {
+        $this->require_login();
+
+        $role_id = (int) $this->session->userdata('role_id');
+        if (! in_array($role_id, $roles, true)) {
+            $this->load->view('errors/forbidden');
+            return false;
+        }
+
+        return true;
+    }
+
     protected function render($view, $data = [])
     {
         $data = array_merge($this->data, $data);

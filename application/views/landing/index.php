@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 
 <head>
@@ -25,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
-                <a href="<?php echo site_url('assets/adminlte'); ?>/index3.html" class="navbar-brand">
+                <a href="<?php echo site_url('landing'); ?>" class="navbar-brand">
                     <img src="<?php echo site_url('assets/adminlte'); ?>/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                         class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light"><?php echo $title; ?></span>
@@ -40,18 +36,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                                    class="fas fa-bars"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="index3.html" class="nav-link">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('login'); ?>" class="nav-link">Something</a>
-                        </li>
                         <?php $logged_in = $this->session->userdata('logged_in');
                         $role_id                                 = (int) $this->session->userdata('role_id'); ?>
+                        <li class="nav-item">
+                            <a href="<?php echo site_url('landing'); ?>" class="nav-link active">Beranda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo site_url('berita/umum'); ?>" class="nav-link">Berita</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" class="nav-link dropdown-toggle">
@@ -73,18 +65,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                     </ul>
 
-                    <!-- SEARCH FORM -->
-                    <form class="form-inline ml-0 ml-md-3">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
 
                 <?php if ($logged_in && in_array($role_id, [4, 5], true)): ?>
@@ -138,13 +118,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> Top Navigation <small>Example 3.0</small></h1>
+                            <h1 class="m-0">Beranda</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                                <li class="breadcrumb-item active">Top Navigation</li>
+                                <li class="breadcrumb-item"><a href="<?php echo site_url('landing'); ?>">Home</a></li>
+                                <li class="breadcrumb-item active">Beranda</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -180,62 +159,131 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php if (empty($matalomba)): ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center text-muted p-3">
+                                                    Mata lomba belum tersedia.
+                                                </td>
+                                            </tr>
+                                            <?php else: ?>
+                                            <?php
+                                                $no = ($page > 1) ? (($page - 1) * $limit) + 1 : 1;
+                                            ?>
                                             <?php foreach ($matalomba as $m): ?>
                                             <tr>
-                                                <td>1.</td>
+                                                <td><?php echo $no++; ?></td>
                                                 <td><?php echo $m->nama_lomba; ?></td>
                                                 <td><?php echo $m->bidang; ?></td>
                                                 <td><?php echo $m->lokasi; ?></td>
-                                                <td><a href="<?php echo site_url('pendaftaran/daftar') . '?lomba_id=' . (int) $m->id; ?>"
-                                                        class="btn btn-sm btn-success">Daftar</a></td>
+                                                <td>
+                                                    <?php if ($logged_in && in_array($role_id, [4, 5], true)): ?>
+                                                    <a href="<?php echo site_url('pendaftaran/daftar') . '?lomba_id=' . (int) $m->id; ?>"
+                                                        class="btn btn-sm btn-success">Daftar</a>
+                                                    <?php elseif (! $logged_in): ?>
+                                                    <span class="text-muted small">Login untuk daftar</span>
+                                                    <?php else: ?>
+                                                    <span class="text-muted">-</span>
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
                                             <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
-                            </div>
-                            <div class="card card-primary card-outline">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the
-                                        card's
-                                        content.
-                                    </p>
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
+                                <?php if (! empty($pagination)): ?>
+                                <div class="card-footer clearfix">
+                                    <div class="float-right">
+                                        <?php echo $pagination; ?>
+                                    </div>
                                 </div>
-                            </div><!-- /.card -->
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <!-- /.col-md-6 -->
                         <div class="col-lg-6">
+                            <?php
+                                if (! function_exists('berita_ringkas')) {
+                                    function berita_ringkas($text, $limit = 60)
+                                    {
+                                        $text = trim(strip_tags((string) $text));
+                                        if ($text === '') {
+                                            return '';
+                                        }
+
+                                        if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+                                            if (mb_strlen($text) <= $limit) {
+                                                return $text;
+                                            }
+
+                                            return rtrim(mb_substr($text, 0, $limit)) . '...';
+                                        }
+
+                                        if (strlen($text) <= $limit) {
+                                            return $text;
+                                        }
+
+                                        return rtrim(substr($text, 0, $limit)) . '...';
+                                    }
+                                }
+                            ?>
+                            <?php if ($show_berita): ?>
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title m-0">Featured</h5>
+                                    <h5 class="card-title mb-0">Berita Terbaru</h5>
                                 </div>
                                 <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <?php if (empty($berita)): ?>
+                                    <div class="text-muted">Belum ada berita.</div>
+                                    <?php else: ?>
+                                    <div class="row">
+                                        <?php foreach ($berita as $item): ?>
+                                        <?php $ringkas = berita_ringkas($item['isi'] ?? '', 60); ?>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <div class="card h-100 mb-0">
+                                                <?php if (! empty($item['foto'])): ?>
+                                                <img src="<?php echo site_url($item['foto']); ?>" alt="Foto berita"
+                                                    class="card-img-top" style="height:160px;object-fit:cover;">
+                                                <?php else: ?>
+                                                <div class="bg-light d-flex align-items-center justify-content-center"
+                                                    style="height:160px;">
+                                                    <i class="far fa-image text-muted"></i>
+                                                </div>
+                                                <?php endif; ?>
+                                                <div class="card-body">
+                                                    <div class="text-muted small mb-1">
+                                                        <?php echo html_escape($item['nama_lomba'] ?? '-'); ?>
+                                                        <?php if (! empty($item['bidang'])): ?>
+                                                        -<?php echo html_escape($item['bidang']); ?>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <h6 class="card-title mb-2">
+                                                        <?php echo html_escape($item['judul']); ?>
+                                                    </h6>
+                                                    <?php if ($ringkas !== ''): ?>
+                                                    <p class="card-text text-muted mb-0">
+                                                        <?php echo html_escape($ringkas); ?>
+                                                    </p>
+                                                    <?php else: ?>
+                                                    <p class="card-text text-muted mb-0">Ringkasan belum tersedia.</p>
+                                                    <?php endif; ?>
+                                                    <a href="<?php echo site_url('berita/detail/' . (int) $item['id']); ?>"
+                                                        class="d-inline-block mt-2 text-sm">Baca selengkapnya</a>
+                                                </div>
+                                                <?php if (! empty($item['created_at'])): ?>
+                                                <div class="card-footer text-muted small">
+                                                    <?php echo html_escape($item['created_at']); ?>
+                                                </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
-                                    <h5 class="card-title m-0">Featured</h5>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                         <!-- /.col-md-6 -->
                     </div>
@@ -254,13 +302,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Main Footer -->
         <footer class="main-footer">
-            <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
+            <strong>Copyright &copy;                                     <?php echo date('Y'); ?>.</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->

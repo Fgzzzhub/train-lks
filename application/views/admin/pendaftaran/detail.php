@@ -3,7 +3,7 @@
 <div class="row mb-3">
     <div class="col-sm-6">
         <h5 class="mb-1">Detail Pendaftaran</h5>
-        <small class="text-muted">ID:                                      <?php echo (int) $row['pendaftaran_id']; ?></small>
+        <small class="text-muted">ID:                                      <?php echo (int) $row['pendaftar_id']; ?></small>
     </div>
     <div class="col-sm-6 text-sm-right">
         <a href="<?php echo site_url('admin/pendaftaran'); ?>" class="btn btn-secondary mt-2 mt-sm-0">
@@ -21,7 +21,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <th style="width:200px;">Nama</th>
-                        <td><?php echo html_escape($row['username']); ?></td>
+                        <td><?php echo html_escape($row['nama']); ?></td>
                     </tr>
                     <tr>
                         <th>Role</th>
@@ -63,21 +63,17 @@
                         <th>Created</th>
                         <td><?php echo html_escape($row['created_at']); ?></td>
                     </tr>
-                    <tr>
-                        <th>Updated</th>
-                        <td><?php echo html_escape($row['updated_at']); ?></td>
-                    </tr>
                 </table>
 
                 <?php if ($row['status'] === 'pending'): ?>
                 <div class="mt-3">
-                    <a href="<?php echo site_url('admin/pendaftaran/approve/' . $row['pendaftaran_id']); ?>"
+                    <a href="<?php echo site_url('admin/pendaftaran/approve/' . $row['pendaftar_id']); ?>"
                         class="btn btn-success" onclick="return confirm('Approve pendaftaran ini?');">
                         <i class="fas fa-check"></i> Approve
                     </a>
 
                     <form method="post"
-                        action="<?php echo site_url('admin/pendaftaran/reject/' . $row['pendaftaran_id']); ?>"
+                        action="<?php echo site_url('admin/pendaftaran/reject/' . $row['pendaftar_id']); ?>"
                         class="d-inline">
                         <input type="hidden" name="catatan" value="Ditolak oleh admin (lihat detail).">
                         <button type="submit" class="btn btn-danger"

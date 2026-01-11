@@ -6,12 +6,13 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
                     <h3 class="card-title mb-0">Notifikasi Terbaru</h3>
-                    <span class="badge badge-warning ml-2">Belum dibaca: <?php echo (int) $notif_unread; ?></span>
+                    <span class="badge badge-warning ml-2">Belum dibaca:                                                                         <?php echo (int) $notif_unread; ?></span>
                 </div>
                 <div class="card-tools">
-                    <a href="<?php echo site_url('notifikasi'); ?>" class="btn btn-sm btn-outline-primary">Lihat semua</a>
+                    <a href="<?php echo site_url('notifikasi'); ?>" class="btn btn-sm btn-outline-primary">Lihat
+                        semua</a>
                     <a href="<?php echo site_url('notifikasi/read_all'); ?>"
-                        class="btn btn-sm btn-outline-secondary <?php echo $notif_unread ? '' : 'disabled'; ?>">
+                        class="btn btn-sm btn-outline-secondary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo $notif_unread ? '' : 'disabled'; ?>">
                         Tandai semua dibaca
                     </a>
                 </div>
@@ -54,6 +55,22 @@
                 </ul>
                 <?php endif; ?>
             </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small card -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3><?php echo $total; ?></h3>
+
+                <p>Pendaftar</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <a href="<?php echo site_url('pendaftar');?>" class="small-box-footer">
+                Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
     </div>
 </div>
